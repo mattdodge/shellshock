@@ -6,10 +6,10 @@ def get_parser(obj_type):
     from shellshock.parse.types import (
         AssignType,
         CallType,
-        NameType,
     )
 
     import shellshock.parse.literals as literals
+    import shellshock.parse.variables as variables
 
     from shellshock.parse.expressions import (
         ExprType,
@@ -28,10 +28,15 @@ def get_parser(obj_type):
         ast.Ellipsis: literals.EllipsisType,
         ast.NameConstant: literals.NameConstantType,
 
+        ast.Name: variables.NameType,
+        ast.Load: variables.LoadType,
+        ast.Store: variables.StoreType,
+        ast.Del: variables.DelType,
+        ast.Starred: variables.StarredType,
+
         ast.Assign: AssignType,
         ast.Call: CallType,
         ast.Expr: ExprType,
-        ast.Name: NameType,
     }
 
     if obj_type not in parse_mappings:
