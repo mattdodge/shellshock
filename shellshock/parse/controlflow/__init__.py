@@ -8,4 +8,4 @@ from .tryfinally import TryFinallyType
 from .tryexcept import TryExceptType
 from .excepthandler import ExceptHandlerType
 from ._with import WithType
-from .withitem import withitemType
+from .withitem import WithitemType
