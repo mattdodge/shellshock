@@ -1,2 +1,0 @@
-class Unparseable(Exception):
-    pass
