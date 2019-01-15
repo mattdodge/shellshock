@@ -1,8 +1,8 @@
 from shellshock.parse import Parseable, parse
 
 
-class ${PARSETYPE}Type(Parseable):
+class Type(Parseable):
 
     @staticmethod
     def parse(obj):
-        raise NotImplementedError
+        raise NotImplemented

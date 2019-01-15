@@ -1,4 +1,4 @@
-from shellshock.parse import Parseable
+from shellshock.parse import Parseable, parse
 
 
 class StrType(Parseable):

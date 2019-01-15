@@ -7,21 +7,31 @@ def get_parser(obj_type):
         AssignType,
         CallType,
         NameType,
-        NumType,
-        StrType,
     )
+
+    import shellshock.parse.literals as literals
 
     from shellshock.parse.expressions import (
         ExprType,
     )
 
     parse_mappings = {
+        ast.Num: literals.NumType,
+        ast.Str: literals.StrType,
+        ast.FormattedValue: literals.FormattedValueType,
+        ast.JoinedStr: literals.JoinedStrType,
+        ast.Bytes: literals.BytesType,
+        ast.List: literals.ListType,
+        ast.Tuple: literals.TupleType,
+        ast.Set: literals.SetType,
+        ast.Dict: literals.DictType,
+        ast.Ellipsis: literals.EllipsisType,
+        ast.NameConstant: literals.NameConstantType,
+
         ast.Assign: AssignType,
         ast.Call: CallType,
         ast.Expr: ExprType,
         ast.Name: NameType,
-        ast.Num: NumType,
-        ast.Str: StrType,
     }
 
     if obj_type not in parse_mappings:
@@ -37,7 +47,7 @@ class Parseable():
 
     @staticmethod
     def parse(obj):
-        raise NotImplemented
+        raise NotImplementedError
 
 
 def parse(obj):

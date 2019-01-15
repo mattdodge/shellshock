@@ -1,7 +1,7 @@
 from shellshock.parse import Parseable, parse
 
 
-class ${PARSETYPE}Type(Parseable):
+class BytesType(Parseable):
 
     @staticmethod
     def parse(obj):
