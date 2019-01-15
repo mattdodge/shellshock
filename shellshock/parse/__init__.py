@@ -27,6 +27,7 @@ def __get_parser(obj_type):
     import shellshock.parse.variables as variables
     import shellshock.parse.expressions as expressions
     import shellshock.parse.statements as statements
+    import shellshock.parse.controlflow as controlflow
 
     def get_ast_type(ast_type):
         return getattr(ast, ast_type, "Unknown{}".format(ast_type))
@@ -111,6 +112,17 @@ def __get_parser(obj_type):
         get_ast_type('ImportFrom'): statements.ImportFromType,
         get_ast_type('alias'): statements.AliasType,
 
+        get_ast_type('If'): controlflow.IfType,
+        get_ast_type('For'): controlflow.ForType,
+        get_ast_type('While'): controlflow.WhileType,
+        get_ast_type('Break'): controlflow.BreakType,
+        get_ast_type('Continue'): controlflow.ContinueType,
+        get_ast_type('Try'): controlflow.TryType,
+        get_ast_type('TryFinally'): controlflow.TryFinallyType,
+        get_ast_type('TryExcept'): controlflow.TryExceptType,
+        get_ast_type('ExceptHandler'): controlflow.ExceptHandlerType,
+        get_ast_type('With'): controlflow.WithType,
+        get_ast_type('WithItem'): controlflow.withitemType,
     }
 
     if obj_type not in parse_mappings:
