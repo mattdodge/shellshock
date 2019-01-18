@@ -17,7 +17,9 @@ class ParseTestCase(TestCase):
         parsed = self._parse_source(source)
         actual_out_lines = []
         for node in parsed.body:
-            actual_out_lines.append(parse(node))
+            res = parse(node)
+            if res:
+                actual_out_lines.append(parse(node))
         actual_out = "\n".join(actual_out_lines)
         self.assertEqual(actual_out, output.strip())
 
