@@ -1,6 +1,8 @@
 import ast
 from unittest import TestCase
-from shellshock.parse import parse, Parseable, Unparseable
+from shellshock.parse import Parseable, Unparseable
+from shellshock.convert import ConvertContext
+from shellshock.parse.body import parse_body
 
 
 class ParseTestCase(TestCase):
@@ -8,23 +10,14 @@ class ParseTestCase(TestCase):
     def setUp(self):
         super().setUp()
         Parseable.reset()
-
-    def _parse_source(self, source):
-        parsed = ast.parse(source)
-        return parsed
+        ConvertContext.lines = []
+        ConvertContext.allow_errors = False
+        ConvertContext.indent_level = 0
 
     def assert_parsed(self, source, output):
-        parsed = self._parse_source(source)
-        actual_out_lines = []
-        for node in parsed.body:
-            res = parse(node)
-            if res:
-                actual_out_lines.append(parse(node))
-        actual_out = "\n".join(actual_out_lines)
-        self.assertEqual(actual_out, output.strip())
+        parsed = parse_body(ast.parse(source).body)
+        self.assertEqual(parsed, output.strip())
 
     def assert_parsed_raises(self, source, exc=Unparseable):
-        parsed = self._parse_source(source)
         with self.assertRaises(exc):
-            for node in parsed.body:
-                parse(node)
+            parse_body(ast.parse(source).body)
