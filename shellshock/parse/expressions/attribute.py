@@ -5,4 +5,7 @@ class AttributeType(Parseable):
 
     @staticmethod
     def parse(obj):
-        raise NotImplementedError
+        """ Returns a stringified version of the attr. """
+        return "{}.{}".format(
+            parse(obj.value),
+            obj.attr)

@@ -7,17 +7,23 @@ class Unparseable(Exception):
 
 class Parseable():
 
+    _known_vars = set()
+    _known_refs = {
+        "print",
+        "ss",
+    }
+
     @staticmethod
     def parse(obj):
         raise NotImplementedError
 
+    @classmethod
+    def reset(cls):
+        cls._known_vars = set()
 
-def parse(obj):
-    try:
-        node_out = __get_parser(type(obj)).parse(obj)
-    except Unparseable as e:
-        node_out = "# Unknown parse of source code {}".format(e)
 
+def parse(obj, *args, **kwargs):
+    node_out = __get_parser(type(obj)).parse(obj, *args, **kwargs)
     return node_out
 
 

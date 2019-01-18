@@ -3,9 +3,11 @@ from shellshock.parse import Parseable, parse
 
 class AssignType(Parseable):
 
-    @staticmethod
-    def parse(obj):
+    @classmethod
+    def parse(cls, obj):
+        assign_target = obj.targets[0].id
+        cls._known_vars.add(assign_target)
         return "{}={}".format(
-            obj.targets[0].id,
+            assign_target,
             parse(obj.value),
         )

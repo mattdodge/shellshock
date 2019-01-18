@@ -1,8 +1,11 @@
-from shellshock.parse import Parseable, parse
+from shellshock.parse import Parseable, Unparseable
 
 
 class ImportType(Parseable):
 
     @staticmethod
     def parse(obj):
-        raise NotImplementedError
+        if obj.names[0].name == "shellshock":
+            pass
+        else:
+            raise Unparseable("Only imports of shellshock are allowed")
