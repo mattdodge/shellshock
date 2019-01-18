@@ -5,4 +5,4 @@ class EqType(Parseable):
 
     @staticmethod
     def parse(obj):
-        raise NotImplementedError
+        return "=="

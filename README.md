@@ -21,7 +21,7 @@ shellshock my_script.py -o my_script.sh
 ## Starting with an existing shell script
 Let's say you have an existing shell script you want to convert that looks like this:
 
-*oldscript.sh*
+**oldscript.sh**
 ```bash
 if [ -f "file" ]; then
   echo "ok"
@@ -30,7 +30,7 @@ fi
 
 You can easily make this a shellshock script using the `ss.shell` method and a multiline string at the top of the file:
 
-*oldscript.py*
+**oldscript.py**
 ```python
 import shellshock as ss
 ss.shell("""
@@ -38,4 +38,13 @@ if [ -f "file" ]; then
   echo "ok"
 fi
 """)
+```
+
+Then you could convert it to full Python shellscript syntax like so:
+
+**newscript.py**
+```python
+import shellshock as ss
+if ss.isfile("file"):
+    print("ok")
 ```
