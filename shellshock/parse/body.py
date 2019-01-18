@@ -9,16 +9,24 @@ def parse_body(ast_body):
         if ConvertContext.include_source:
             parsed_lines.extend([
                 "# Original source",
-                "# " + ConvertContext.lines[node.lineno - 1].strip(),
+                "# " + ConvertContext.get_line(node),
             ])
 
         try:
             node_out = parse(node)
-        except (Unparseable, NotImplementedError) as e:
+        except NotImplementedError:
+            if ConvertContext.allow_errors:
+                node_out = "# Operation not allowed on line : {}".format(
+                    ConvertContext.get_line(node))
+            else:
+                raise
+
+        except Unparseable as e:
             if ConvertContext.allow_errors:
                 node_out = "# Unknown parse of source code {}".format(e)
             else:
                 raise
+
         if node_out:
             # Allow our parse method to return a list of lines instead of 1
             if isinstance(node_out, list):
