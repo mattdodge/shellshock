@@ -8,7 +8,10 @@ def parse_source(source_file):
     return ast.parse("".join(lines)), lines
 
 
-def convert_source(source_file, include_source=False):
+def convert_source(
+        source_file,
+        include_source=False,
+        allow_errors=False):
     parsed, source_lines = parse_source(source_file)
     output = ""
     for node_idx, node in enumerate(parsed.body):
@@ -35,8 +38,11 @@ def convert_source(source_file, include_source=False):
                 output += "# {}".format(source_lines[this_node_line_no - 1])
         try:
             node_out = parse(node)
-        except Unparseable as e:
-            node_out = "# Unknown parse of source code {}".format(e)
+        except (Unparseable, NotImplementedError) as e:
+            if allow_errors:
+                node_out = "# Unknown parse of source code {}".format(e)
+            else:
+                raise
 
         if node_out:
             output += node_out + "\n"
