@@ -1,8 +1,10 @@
-from shellshock.parse import Parseable, parse
+from shellshock.parse import Parseable
 
 
 class EqType(Parseable):
 
     @staticmethod
-    def parse(obj):
+    def parse(obj, numeric=False):
+        if numeric:
+            return '-eq'
         return "=="

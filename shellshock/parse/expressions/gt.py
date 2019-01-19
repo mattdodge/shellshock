@@ -1,8 +1,10 @@
-from shellshock.parse import Parseable, parse
+from shellshock.parse import Parseable
 
 
 class GtType(Parseable):
 
     @staticmethod
-    def parse(obj):
-        raise NotImplementedError
+    def parse(obj, numeric=False):
+        if numeric:
+            return '-gt'
+        return "\\>"
