@@ -1,6 +1,6 @@
 <p align="center">
 <img src="logo.png" />
-<em><strong>Write your shell scripts using Python</strong></em>
+<em><strong>Write and test your shell scripts using Python</strong></em>
 </p>
 <hr/>
 Shell scripts are great - they run on most *nix machines, they allow you interact with the file system easily, and they are light weight and don't require a massive runtime. However, the syntax is error prone and they are difficult to manage and test. Shellshock lets you write and test your shell scripts using the Python syntax and test cases you already know and love.
