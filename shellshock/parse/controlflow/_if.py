@@ -6,8 +6,17 @@ class IfType(Parseable):
 
     @staticmethod
     def parse(obj):
-        return [
-            "if [ {test} ]; then".format(test=parse(obj.test)),
-            "{body}".format(body=parse_body(obj.body)),
-            "fi",
-        ]
+        out_lines = []
+        out_lines.append(
+            "if [ {test} ]; then".format(test=parse(obj.test))
+        )
+        out_lines.append(
+            "{body}".format(body=parse_body(obj.body))
+        )
+        if obj.orelse:
+            out_lines.append("else")
+            out_lines.append(
+                "{body}".format(body=parse_body(obj.orelse))
+            )
+        out_lines.append("fi")
+        return out_lines

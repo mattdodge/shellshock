@@ -46,3 +46,44 @@ if [ $var == 'value' ]; then
   fi
 fi
         """)
+
+    def test_else(self):
+        self.assert_parsed(
+            """
+var = "value"
+if var == "value":
+    print("here")
+else:
+    print("not here")
+        """, """
+var='value'
+if [ $var == 'value' ]; then
+  echo 'here'
+else
+  echo 'not here'
+fi
+        """)
+
+    def test_elif(self):
+        """ Elifs are nested, no elseif support """
+        self.assert_parsed(
+            """
+var = "value"
+if var == "value":
+    print("here")
+elif var == "other":
+    print("and here")
+else:
+    print("not here")
+        """, """
+var='value'
+if [ $var == 'value' ]; then
+  echo 'here'
+else
+  if [ $var == 'other' ]; then
+    echo 'and here'
+  else
+    echo 'not here'
+  fi
+fi
+        """)
