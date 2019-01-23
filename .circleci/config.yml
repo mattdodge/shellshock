@@ -65,6 +65,6 @@ jobs:
       - run:
           name: upload to pypi
           command: |
-            pip install twine
+            sudo pip install twine
             python setup.py sdist bdist_wheel
             twine upload dist/*
