@@ -1,19 +1,27 @@
-version: 2 # use CircleCI 2.0
+version: 2
 
-jobs: # A basic unit of work in a run
-  build: # runs not using Workflows must have a `build` job as entry point 
-    # directory where steps are run
-    docker: # run the steps with Docker
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-3.6
+      - test-3.5
+      - test-2.7
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            tags:
+              only: /.*/
+
+jobs:
+  test-3.5: &python-test
+    docker:
       # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
-      - image: circleci/python:3.6.4
-        environment: # environment variables for primary container
-          PIPENV_VENV_IN_PROJECT: true
-      # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
+      - image: circleci/python:3.5
 
     steps: # steps that comprise the `build` job
       - checkout # check out source code to working directory
-      - run: sudo chown -R circleci:circleci /usr/local/bin
-      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
       - run:
           command: |
             sudo pip install pytest
@@ -26,3 +34,36 @@ jobs: # A basic unit of work in a run
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: test-results
           destination: tr1
+    
+  test-3.6:
+    <<: *python-test
+    docker:
+      - image: circleci/python:3.6
+
+  test-2.7:
+    <<: *python-test
+    docker:
+      - image: circleci/python:2.7
+
+  deploy:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run:
+          name: verify git tag vs. version
+          command: |
+            python setup.py verify
+      - run:
+          name: init .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "repository=https://upload.pypi.org/legacy/" >> ~/.pypirc
+            echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+          name: upload to pypi
+          command: |
+            pip install twine
+            python setup.py sdist bdist_wheel
+            twine upload dist/*
