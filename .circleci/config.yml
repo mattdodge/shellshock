@@ -1,0 +1,70 @@
+version: 2
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-3.6
+      - test-3.5
+  deploy:  # Run the deployment job when a new tag is pushed
+    jobs:
+      - deploy:
+          filters:
+            tags:
+              only: /[0-9]+\..*/
+            branches:
+              ignore: /.*/
+
+jobs:
+  test-3.5: &python-test
+    docker:
+      # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
+      - image: circleci/python:3.5
+
+    steps: # steps that comprise the `build` job
+      - checkout # check out source code to working directory
+      - run:
+          command: |
+            sudo pip install pytest
+      - run:
+          command: |
+            mkdir -p test-results
+            py.test shellshock --junitxml=test-results/junit.xml
+      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test-results
+      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: test-results
+          destination: tr1
+    
+  test-3.6:
+    <<: *python-test
+    docker:
+      - image: circleci/python:3.6
+
+  test-2.7:
+    <<: *python-test
+    docker:
+      - image: circleci/python:2.7
+
+  deploy:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run:
+          name: verify git tag vs. version
+          command: |
+            python setup.py verify
+      - run:
+          name: init .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "repository=https://upload.pypi.org/legacy/" >> ~/.pypirc
+            echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+          name: upload to pypi
+          command: |
+            sudo pip install twine
+            python setup.py sdist bdist_wheel
+            twine upload dist/*
