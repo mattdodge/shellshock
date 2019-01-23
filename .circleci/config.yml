@@ -12,6 +12,8 @@ workflows:
           filters:
             tags:
               only: /[0-9]+\..*/
+            branches:
+              ignore: /.*/
 
 jobs:
   test-3.5: &python-test
