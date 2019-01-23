@@ -6,6 +6,8 @@ workflows:
     jobs:
       - test-3.6
       - test-3.5
+      - test-2.7
+
   deploy:  # Run the deployment job when a new tag is pushed
     jobs:
       - deploy:

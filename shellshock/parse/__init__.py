@@ -118,6 +118,7 @@ def __get_parser(obj_type):
         get_ast_type('Import'): statements.ImportType,
         get_ast_type('ImportFrom'): statements.ImportFromType,
         get_ast_type('alias'): statements.AliasType,
+        get_ast_type('Print'): statements.PrintType,
 
         get_ast_type('If'): controlflow.IfType,
         get_ast_type('For'): controlflow.ForType,

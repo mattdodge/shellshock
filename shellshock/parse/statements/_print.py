@@ -5,4 +5,5 @@ class PrintType(Parseable):
 
     @staticmethod
     def parse(obj):
-        raise NotImplementedError
+        return "echo {}".format(
+            " ".join([parse(value) for value in obj.values]))

@@ -9,3 +9,4 @@ from ._pass import PassType
 from ._import import ImportType
 from .importfrom import ImportFromType
 from .alias import AliasType
+from ._print import PrintType

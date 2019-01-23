@@ -8,7 +8,7 @@ from shellshock.parse.body import parse_body
 class ParseTestCase(TestCase):
 
     def setUp(self):
-        super().setUp()
+        super(ParseTestCase, self).setUp()
         Parseable.reset()
         ConvertContext.lines = []
         ConvertContext.allow_errors = False
