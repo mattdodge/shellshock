@@ -12,4 +12,7 @@ class CallType(Parseable):
             return "echo {}".format(parse(obj.args[0]))
         elif func_name.startswith('ss.'):
             return get_helper(obj.func.attr, obj)
-        return "{} {}".format(func_name, obj.args)
+        return "{} {}".format(
+            func_name, 
+            " ".join([parse(arg) for arg in obj.args]),
+        )

@@ -42,3 +42,20 @@ touch anotherone
 touch testfile
 touch anotherone
         """)
+
+    def test_function_def(self):
+        self.assert_parsed(
+            """
+def dosomething(var1, var2='default'):
+    print(var1)
+    print(var2)
+dosomething('arg1', 'arg2')
+        """, """
+dosomething() {
+  var1=${1}
+  var2=${2:-'default'}
+  echo $var1
+  echo $var2
+}
+dosomething 'arg1' 'arg2'
+        """)

@@ -10,5 +10,7 @@ class NameType(Parseable):
             return "${}".format(obj.id)
         elif obj.id in cls._known_refs:
             return obj.id
+        elif obj.id in cls._known_funcs:
+            return obj.id
         else:
             raise Unparseable("Unknown name {}".format(obj.id))

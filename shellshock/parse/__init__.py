@@ -8,6 +8,7 @@ class Unparseable(Exception):
 class Parseable():
 
     _known_vars = set()
+    _known_funcs = set()
     _known_refs = {
         "print",
         "ss",
