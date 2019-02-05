@@ -1,6 +1,8 @@
 from os import getcwd, chdir
 from os.path import join
 from shellshock.convert import convert_source
+from shellshock.parse import Parseable
+from shellshock.testing.mocks import TestingMock
 from shutil import rmtree
 import subprocess
 import tempfile
@@ -19,6 +21,7 @@ class ShellshockTestCase(TestCase):
         if self._exec_dir is not None:
             self._prev_dir = getcwd()
             chdir(self._exec_dir)
+        self.mocks = {}
 
     def tearDown(self):
         if self._prev_dir is not None:
@@ -41,3 +44,8 @@ class ShellshockTestCase(TestCase):
         if self._cleanup_file:
             rmtree(tmp)
         return result
+
+    def add_mock_function(self, function_call_id, side_effect=None):
+        self.mocks[function_call_id] = TestingMock(side_effect=side_effect)
+        Parseable._known_mocks = self.mocks
+        return self.mocks[function_call_id].mock

@@ -1,4 +1,6 @@
+from shellshock.parse import Parseable
 from shellshock.parse.body import parse_body
+from shellshock.testing.mocks import get_testing_mocks
 import ast
 
 
@@ -20,4 +22,7 @@ def convert_source(source_file, include_source=False, allow_errors=False):
     with open(source_file, 'r') as f:
         lines = f.readlines()
     ConvertContext.lines = lines
-    return parse_body(ast.parse("".join(lines)).body)
+    body = ""
+    body += get_testing_mocks()
+    body += parse_body(ast.parse("".join(lines)).body)
+    return body

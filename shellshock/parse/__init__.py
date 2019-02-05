@@ -13,6 +13,7 @@ class Parseable():
         "print",
         "ss",
     }
+    _known_mocks = {}
 
     @staticmethod
     def parse(obj):

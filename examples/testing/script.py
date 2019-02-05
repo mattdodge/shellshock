@@ -4,4 +4,4 @@ def does_something(var):
     print(var)
 
 
-does_something(3)
+does_something(3, __id__='funccall')

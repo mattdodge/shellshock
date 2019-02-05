@@ -1,1 +1,1 @@
-from shellshock.executors.shell import shell
+from shellshock.executors.shell import shell, noop
