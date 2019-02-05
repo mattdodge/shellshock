@@ -5,4 +5,9 @@ class NameConstantType(Parseable):
 
     @staticmethod
     def parse(obj):
-        raise NotImplementedError
+        if obj.value == True:
+            return "true"
+        elif obj.value == False:
+            return "false"
+        elif obj.value == None:
+            return "none"
