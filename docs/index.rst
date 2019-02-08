@@ -10,8 +10,14 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+   :hidden:
 
+   Overview <self>
+   getting_started
    features
+   testing
+   converters
+   cli
 
 
 Installation
