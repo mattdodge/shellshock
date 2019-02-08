@@ -1,10 +1,13 @@
+from shellshock.helpers import helper
+from shellshock.parse import parse
 
 
-def shell(call_ref):
-    from shellshock.parse import parse
-    arg = call_ref.args[0]
+@helper('ss.shell')
+def shell(args, kwargs):
+    arg = args[0]
     return parse(arg, raw=True).strip()
 
 
-def noop(call_ref):
-    return ":"
+@helper('print')
+def print(args):
+    return "echo {}".format(" ".join([parse(arg) for arg in args]))

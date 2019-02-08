@@ -1,7 +1,10 @@
-from shellshock.parse import Parseable
 from shellshock.parse.body import parse_body
 from shellshock.testing.mocks import get_testing_mocks
 import ast
+
+# Load our helper methods
+import shellshock.helpers.ops  # noqa
+import shellshock.helpers.shell  # noqa
 
 
 class ConvertContext(object):

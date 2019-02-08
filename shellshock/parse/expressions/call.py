@@ -1,5 +1,5 @@
 from shellshock.parse import Parseable, parse
-from shellshock.helpers import get_helper
+from shellshock.helpers import run_helper
 
 
 class CallType(Parseable):
@@ -22,12 +22,10 @@ class CallType(Parseable):
                         '__mock_{}'.format(mock_id)
                     ]
 
-        if func_name == 'print':
-            return "echo {}".format(parse(obj.args[0]))
-        elif func_name.startswith('ss.'):
-            return get_helper(obj.func.attr, obj)
-        else:
+        if func_name in cls._known_funcs:
             return "{} {}".format(
                 func_name,
                 " ".join([parse(arg) for arg in obj.args]),
             )
+        else:
+            return run_helper(func_name, obj)
