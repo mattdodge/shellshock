@@ -1,5 +1,5 @@
 from shellshock.parse import Parseable, parse
-from shellshock.helpers import run_helper
+from shellshock.converters import run_converter
 
 
 class CallType(Parseable):
@@ -28,4 +28,4 @@ class CallType(Parseable):
                 " ".join([parse(arg) for arg in obj.args]),
             )
         else:
-            return run_helper(func_name, obj)
+            return run_converter(func_name, obj)

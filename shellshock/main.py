@@ -25,7 +25,14 @@ def main():
         help="Allow parse errors and output the errors as comments in the shell script",  # noqa: E501
         action="store_true",
     )
+    parser.add_argument(
+        "-c",
+        "--converters",
+        help="Paths to Python files containing additional custom converter method definitions",  # noqa: E501
+        action="append",
+    )
     args = parser.parse_args()
+    print(args.converters)
     result = convert_source(
         args.input_file,
         include_source=args.include_source,

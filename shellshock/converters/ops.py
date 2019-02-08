@@ -1,7 +1,7 @@
-from shellshock.helpers import helper
+from shellshock.converters import converter
 from shellshock.parse import parse
 
 
-@helper('ss.noop')
+@converter('ss.noop')
 def noop(args, kwargs):
     return ":"
