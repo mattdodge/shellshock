@@ -11,7 +11,6 @@ class Parseable():
     _known_funcs = set()
     _known_refs = {
         "print",
-        "ss",
     }
     _known_mocks = {}
 

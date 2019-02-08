@@ -3,7 +3,8 @@ from shellshock.parse import Parseable
 
 class ImportType(Parseable):
 
-    @staticmethod
-    def parse(obj):
-        # Imports are allowed but ignored
-        pass
+    @classmethod
+    def parse(cls, obj):
+        # Imports just declare our reference
+        for names in obj.names:
+            cls._known_refs.add(names.name)

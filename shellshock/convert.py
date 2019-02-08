@@ -1,10 +1,7 @@
 from shellshock.parse.body import parse_body
 from shellshock.testing.mocks import get_testing_mocks
 import ast
-
-# Load our converter methods
-import shellshock.converters.ops  # noqa
-import shellshock.converters.shell  # noqa
+import sys
 
 
 class ConvertContext(object):
@@ -17,6 +14,19 @@ class ConvertContext(object):
     def get_line(cls, node):
         """ Get the source line for a node """
         return cls.lines[node.lineno - 1].strip()
+
+
+def load_converters(custom_converters=[]):
+    # Known converters
+    import shellshock.converters.ops  # noqa
+    import shellshock.converters.shell  # noqa
+
+    for custom in custom_converters:
+        try:
+            __import__(custom)
+        except (ModuleNotFoundError, ImportError):
+            print("FATAL: Invalid custom converter specified : {}".format(custom))  # noqa
+            sys.exit(1)
 
 
 def convert_source(source_file, include_source=False, allow_errors=False):

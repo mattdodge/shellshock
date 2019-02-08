@@ -1,5 +1,5 @@
 import argparse
-from shellshock.convert import convert_source
+from shellshock.convert import load_converters, convert_source
 
 
 def main():
@@ -30,9 +30,10 @@ def main():
         "--converters",
         help="Paths to Python files containing additional custom converter method definitions",  # noqa: E501
         action="append",
+        default=[],
     )
     args = parser.parse_args()
-    print(args.converters)
+    load_converters(args.converters)
     result = convert_source(
         args.input_file,
         include_source=args.include_source,
