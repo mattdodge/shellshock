@@ -12,7 +12,7 @@ if var == "value":
         """, """
 var='value'
 if [ $var == 'value' ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -25,7 +25,7 @@ if var != "value":
         """, """
 var='value'
 if [ $var != 'value' ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -38,7 +38,7 @@ if var < "value":
         """, """
 var='value'
 if [ $var \\< 'value' ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -59,7 +59,7 @@ if var > "value":
         """, """
 var='value'
 if [ $var \\> 'value' ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -80,7 +80,7 @@ if var == 3:
         """, """
 var='3'
 if [ $var -eq 3 ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -93,7 +93,7 @@ if var != 3:
         """, """
 var='3'
 if [ $var -ne 3 ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -106,7 +106,7 @@ if var < 3:
         """, """
 var='3'
 if [ $var -lt 3 ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -119,7 +119,7 @@ if var <= 3:
         """, """
 var='3'
 if [ $var -le 3 ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -132,7 +132,7 @@ if var > 3:
         """, """
 var='3'
 if [ $var -gt 3 ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -145,6 +145,6 @@ if var >= 3:
         """, """
 var='3'
 if [ $var -ge 3 ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)

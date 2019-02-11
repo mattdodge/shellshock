@@ -12,7 +12,7 @@ if var == "value":
         """, """
 var='value'
 if [ $var == 'value' ]; then
-  echo 'here'
+  echo -e 'here'
 fi
         """)
 
@@ -26,8 +26,8 @@ if var == "value":
         """, """
 var='value'
 if [ $var == 'value' ]; then
-  echo 'here'
-  echo 'and here'
+  echo -e 'here'
+  echo -e 'and here'
 fi
         """)
 
@@ -42,7 +42,7 @@ if var == "value":
 var='value'
 if [ $var == 'value' ]; then
   if [ $var == 'value' ]; then
-    echo 'here'
+    echo -e 'here'
   fi
 fi
         """)
@@ -58,9 +58,9 @@ else:
         """, """
 var='value'
 if [ $var == 'value' ]; then
-  echo 'here'
+  echo -e 'here'
 else
-  echo 'not here'
+  echo -e 'not here'
 fi
         """)
 
@@ -78,12 +78,12 @@ else:
         """, """
 var='value'
 if [ $var == 'value' ]; then
-  echo 'here'
+  echo -e 'here'
 else
   if [ $var == 'other' ]; then
-    echo 'and here'
+    echo -e 'and here'
   else
-    echo 'not here'
+    echo -e 'not here'
   fi
 fi
         """)

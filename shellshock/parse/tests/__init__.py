@@ -1,7 +1,7 @@
 import ast
 from unittest import TestCase
 from shellshock.parse import Parseable, Unparseable
-from shellshock.convert import ConvertContext
+from shellshock.convert import ConvertContext, load_converters
 from shellshock.parse.body import parse_body
 
 
@@ -10,9 +10,8 @@ class ParseTestCase(TestCase):
     def setUp(self):
         super(ParseTestCase, self).setUp()
         Parseable.reset()
-        ConvertContext.lines = []
-        ConvertContext.allow_errors = False
-        ConvertContext.indent_level = 0
+        ConvertContext.reset()
+        load_converters()
 
     def assert_parsed(self, source, output):
         parsed = parse_body(ast.parse(source).body)

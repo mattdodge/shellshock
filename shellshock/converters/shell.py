@@ -1,4 +1,5 @@
 from shellshock.converters import converter
+from shellshock.convert import ConvertContext
 from shellshock.parse import parse
 
 
@@ -10,4 +11,4 @@ def shell(args, kwargs):
 
 @converter('print')
 def print(args):
-    return "echo {}".format(" ".join([parse(arg) for arg in args]))
+    return "echo -e {}".format(" ".join([parse(arg) for arg in args]))

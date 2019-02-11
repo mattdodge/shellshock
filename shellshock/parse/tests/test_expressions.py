@@ -27,7 +27,7 @@ var = 5
 print(var)
         """, """
 var=5
-echo $var
+echo -e $var
         """)
 
     def test_unknown_variable_access(self):

@@ -8,7 +8,7 @@ class TestFunctions(ParseTestCase):
             """
 print('val')
         """, """
-echo 'val'
+echo -e 'val'
         """)
 
     def test_print_var(self):
@@ -18,7 +18,7 @@ val = 1
 print(val)
         """, """
 val=1
-echo $val
+echo -e $val
         """)
 
     def test_raw_shell(self):
@@ -54,8 +54,8 @@ dosomething('arg1', 'arg2')
 dosomething() {
   var1=${1}
   var2=${2:-'default'}
-  echo $var1
-  echo $var2
+  echo -e $var1
+  echo -e $var2
 }
 dosomething 'arg1' 'arg2'
         """)
