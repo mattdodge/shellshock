@@ -3,5 +3,5 @@ from shellshock.parse import parse
 
 
 @converter('ss.noop')
-def noop(args, kwargs):
+def noop(call_args, **kwargs):
     return ":"

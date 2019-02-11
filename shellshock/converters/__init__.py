@@ -2,13 +2,22 @@
 known_converters = {}
 
 
-def run_converter(func, call_ref):
+def run_converter(func, call_ref, parseable, context):
     from shellshock.parse import Unparseable
     if func in known_converters:
         try:
-            return known_converters[func](call_ref.args, call_ref.keywords)
+            return known_converters[func](
+                call_ref.args,
+                call_ref.keywords,
+                parseable=parseable,
+                context=context,
+            )
         except TypeError:
-            return known_converters[func](call_ref.args)
+            return known_converters[func](
+                call_ref.args,
+                parseable=parseable,
+                context=context,
+            )
     raise Unparseable("Unknown converter function {}".format(func))
 
 
