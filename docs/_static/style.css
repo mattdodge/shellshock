@@ -1,0 +1,8 @@
+.code-block-caption {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.code-block-caption .headerlink {
+  display: none;
+}

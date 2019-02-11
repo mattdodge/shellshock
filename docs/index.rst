@@ -17,6 +17,7 @@ Contents:
    features
    testing
    converters
+   converter_reference
    cli
 
 
