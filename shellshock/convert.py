@@ -10,6 +10,7 @@ class ConvertContext(object):
     allow_errors = False
     colors_used = False
     indent_level = 0
+    shebang = '/bin/sh'
     lines = []
 
     @classmethod
@@ -23,7 +24,7 @@ class ConvertContext(object):
         cls.allow_errors = False
         cls.colors_used = False
         cls.indent_level = 0
-        cls.shebang = '#!/bin/bash'
+        cls.shebang = '/bin/sh'
         cls.lines = []
 
 
@@ -47,9 +48,10 @@ def convert_source(source_file, include_source=False, allow_errors=False):
     with open(source_file, 'r') as f:
         lines = f.readlines()
     ConvertContext.lines = lines
-    body = ConvertContext.shebang + "\n"
-    body += get_testing_mocks()
     parsed = parse_body(ast.parse("".join(lines)).body)
+
+    body = "#!" + ConvertContext.shebang + "\n"
+    body += get_testing_mocks()
     if ConvertContext.colors_used:
         body += _get_color_init()
     body += parsed

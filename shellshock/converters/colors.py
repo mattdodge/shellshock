@@ -5,39 +5,40 @@ from shellshock.parse import parse
 _colors_used = False
 
 
-def _color(color_code, text):
+def _color(color_code, args):
     from shellshock.convert import ConvertContext
     ConvertContext.colors_used = True
     return ("${{SHELLSHOCK_COLOR_{color_code}}}"
             "{text}"
             "${{SHELLSHOCK_COLOR_EC}}".format(
                 color_code=color_code,
-                text=text,
+                text=parse(args[0], raw=True),
             ))
+
 
 @converter('ss.red')
 def red(args, kwargs):
-    return _color('RC', parse(args[0], raw=True))
+    return _color('RC', args)
 
 
 @converter('ss.green')
 def green(args, kwargs):
-    return _color('GC', parse(args[0], raw=True))
+    return _color('GC', args)
 
 
 @converter('ss.blue')
 def blue(args, kwargs):
-    return _color('BC', parse(args[0], raw=True))
+    return _color('BC', args)
 
 
 @converter('ss.yellow')
 def yellow(args, kwargs):
-    return _color('YC', parse(args[0], raw=True))
+    return _color('YC', args)
 
 
 @converter('ss.cyan')
 def cyan(args, kwargs):
-    return _color('CC', parse(args[0], raw=True))
+    return _color('CC', args)
 
 
 def _get_color_init():

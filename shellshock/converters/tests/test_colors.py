@@ -2,7 +2,7 @@ from shellshock.convert import ConvertContext
 from ...parse.tests import ParseTestCase
 
 
-class TestComparisons(ParseTestCase):
+class TestColors(ParseTestCase):
 
     def test_colors_active(self):
         self.assert_parsed(
