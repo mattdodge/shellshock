@@ -87,3 +87,36 @@ else
   fi
 fi
         """)
+
+    def test_if_boolean(self):
+        """ Tests we can check a boolean in an if """
+        self.assert_parsed(
+            """
+bool_var = True
+if bool_var:
+    print("here")
+if bool_var == 5:
+    print("again")
+        """, """
+bool_var=true
+if [ $bool_var = true ]; then
+  echo -e 'here'
+fi
+if [ $bool_var -eq 5 ]; then
+  echo -e 'again'
+fi
+        """)
+
+    def test_if_not(self):
+        """ Tests we can check the inverse of a boolean """
+        self.assert_parsed(
+            """
+bool_var = True
+if not bool_var:
+    print("here")
+        """, """
+bool_var=true
+if [ ! $bool_var = true ]; then
+  echo -e 'here'
+fi
+        """)

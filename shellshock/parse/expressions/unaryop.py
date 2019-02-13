@@ -5,4 +5,7 @@ class UnaryOpType(Parseable):
 
     @staticmethod
     def parse(obj):
-        raise NotImplementedError
+        return "{} {}".format(
+            parse(obj.op),
+            parse(obj.operand),
+        )
