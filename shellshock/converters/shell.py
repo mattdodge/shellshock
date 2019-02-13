@@ -1,4 +1,4 @@
-from shellshock.converters import converter
+from shellshock.converters import converter, get_kwarg
 from shellshock.parse import parse
 
 
@@ -32,10 +32,7 @@ def print(call_args, **kwargs):
 
 @converter('ss.envvar')
 def envvar(call_args, call_kwargs, parseable=None, **kwargs):
-    default = None
-    for call_kwarg in call_kwargs:
-        if call_kwarg.arg == 'default':
-            default = parse(call_kwarg.value)
+    default = get_kwarg(call_kwargs, 'default', default=None)
     var_name = parse(call_args[0], raw=True)
     parseable._known_vars.add(var_name)
     if default is not None:

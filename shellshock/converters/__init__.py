@@ -1,3 +1,4 @@
+from shellshock.parse import parse
 
 known_converters = {}
 
@@ -26,3 +27,17 @@ def converter(function_name):
         known_converters[function_name] = func
         return func
     return wrapped_func
+
+
+__get_kwarg_default = -1
+
+
+def get_kwarg(kwargs, kwarg_name, default=__get_kwarg_default):
+    """ Return the value of a kwarg in a converter call """
+    for kwarg in kwargs:
+        if kwarg.arg == kwarg_name:
+            default = parse(kwarg.value)
+            break
+    if default is __get_kwarg_default:
+        raise KeyError("Required kwarg {} was not provided".format(kwarg_name))
+    return default
