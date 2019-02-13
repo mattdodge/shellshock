@@ -24,3 +24,12 @@ ss.exit(5)
         """, """
 exit 5
         """)
+
+    def test_subshell(self):
+        self.assert_parsed(
+            """
+import shellshock as ss
+print(ss.subshell('whoami'))
+        """, """
+echo -e $(whoami)
+        """)

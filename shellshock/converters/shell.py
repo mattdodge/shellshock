@@ -8,6 +8,12 @@ def shell(call_args, **kwargs):
     return parse(arg, raw=True).strip()
 
 
+@converter('ss.subshell')
+def subshell(call_args, **kwargs):
+    """ Run the argument in a subshell, return the result """
+    return "$({})".format(parse(call_args[0], raw=True))
+
+
 @converter('ss.shebang')
 def shebang(call_args, context=None, **kwargs):
     context.shebang = parse(call_args[0], raw=True)
