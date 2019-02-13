@@ -66,3 +66,13 @@ print(var)
 var=5'string'
 echo -e $var
         """)
+
+    def test_bool_op(self):
+        """ Test non-if bool ops """
+        self.assert_parsed(
+            """
+import shellshock as ss
+ss.shell('notarealcommand') or print("failure")
+        """, """
+notarealcommand || echo -e 'failure'
+        """)
