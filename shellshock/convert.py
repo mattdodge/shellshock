@@ -31,6 +31,7 @@ class ConvertContext(object):
 def load_converters(custom_converters=[]):
     # Known converters
     import shellshock.converters.ops  # noqa
+    import shellshock.converters.files  # noqa
     import shellshock.converters.shell  # noqa
     import shellshock.converters.colors  # noqa
 
