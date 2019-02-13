@@ -120,3 +120,35 @@ if [ ! $bool_var = true ]; then
   echo -e 'here'
 fi
         """)
+
+    def test_if_and(self):
+        """ Tests and conditions in an if statement """
+        self.assert_parsed(
+            """
+bool_var = True
+another_var = False
+if bool_var and not another_var:
+    print("here")
+        """, """
+bool_var=true
+another_var=false
+if [ $bool_var = true ] && [ ! $another_var = true ]; then
+  echo -e 'here'
+fi
+        """)
+
+    def test_if_or(self):
+        """ Tests or conditions in an if statement """
+        self.assert_parsed(
+            """
+bool_var = True
+another_var = False
+if bool_var or not another_var:
+    print("here")
+        """, """
+bool_var=true
+another_var=false
+if [ $bool_var = true ] || [ ! $another_var = true ]; then
+  echo -e 'here'
+fi
+        """)
