@@ -26,3 +26,20 @@ None
         """, """
 none
         """)
+
+    def test_str(self):
+        self.assert_parsed(
+            """
+var = "string stuff"
+        """, """
+var='string stuff'
+        """)
+
+    def test_str_single_quotes(self):
+        """ Test that single quotes are escaped """
+        self.assert_parsed(
+            """
+var = "my string's got stuff"
+        """, """
+var='my string'\\''s got stuff'
+        """)
