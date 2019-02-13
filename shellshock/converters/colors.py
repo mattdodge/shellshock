@@ -8,9 +8,9 @@ _colors_used = False
 def _color(color_code, args):
     from shellshock.convert import ConvertContext
     ConvertContext.colors_used = True
-    return ("${{SHELLSHOCK_COLOR_{color_code}}}"
+    return ("\"${{SHELLSHOCK_COLOR_{color_code}}}"
             "{text}"
-            "${{SHELLSHOCK_COLOR_EC}}".format(
+            "${{SHELLSHOCK_COLOR_EC}}\"".format(
                 color_code=color_code,
                 text=parse(args[0], raw=True),
             ))
