@@ -25,6 +25,15 @@ ss.exit(5)
 exit 5
         """)
 
+    def test_sys_exit(self):
+        self.assert_parsed(
+            """
+import sys
+sys.exit(5)
+        """, """
+exit 5
+        """)
+
     def test_subshell(self):
         self.assert_parsed(
             """

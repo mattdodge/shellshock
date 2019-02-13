@@ -19,6 +19,7 @@ def shebang(call_args, context=None, **kwargs):
     context.shebang = parse(call_args[0], raw=True)
 
 
+@converter('sys.exit')
 @converter('ss.exit')
 def exit(call_args, **kwargs):
     return "exit {}".format(parse(call_args[0]))
