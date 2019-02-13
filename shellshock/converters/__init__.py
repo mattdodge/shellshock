@@ -32,12 +32,12 @@ def converter(function_name):
 __get_kwarg_default = -1
 
 
-def get_kwarg(kwargs, kwarg_name, default=__get_kwarg_default):
+def get_kwarg(call_kwargs, kwarg_name, default=__get_kwarg_default, **kwargs):
     """ Return the value of a kwarg in a converter call """
-    for kwarg in kwargs:
+    for kwarg in call_kwargs:
         if kwarg.arg == kwarg_name:
-            default = parse(kwarg.value)
+            default = parse(kwarg.value, **kwargs)
             break
     if default is __get_kwarg_default:
-        raise KeyError("Required kwarg {} was not provided".format(kwarg_name))
+        raise KeyError("Required kwarg '{}' was not provided".format(kwarg_name))
     return default
