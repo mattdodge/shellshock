@@ -11,7 +11,7 @@ def shell(call_args, **kwargs):
 @converter('ss.subshell')
 def subshell(call_args, **kwargs):
     """ Run the argument in a subshell, return the result """
-    return "$({})".format(parse(call_args[0], raw=True))
+    return "\"$({})\"".format(parse(call_args[0], raw=True))
 
 
 @converter('ss.shebang')

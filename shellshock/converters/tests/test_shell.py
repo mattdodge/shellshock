@@ -40,5 +40,5 @@ exit 5
 import shellshock as ss
 print(ss.subshell('whoami'))
         """, """
-echo -e $(whoami)
+echo -e "$(whoami)"
         """)
