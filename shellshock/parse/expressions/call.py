@@ -6,7 +6,7 @@ from shellshock.converters import run_converter
 class CallType(Parseable):
 
     @classmethod
-    def parse(cls, obj):
+    def parse(cls, obj, **kwargs):
         func_name = parse(obj.func)
 
         # Process keyword args to see if this is a func call ID to mock
@@ -34,4 +34,5 @@ class CallType(Parseable):
                 call_ref=obj,
                 parseable=cls,
                 context=ConvertContext,
+                **kwargs,
             )
