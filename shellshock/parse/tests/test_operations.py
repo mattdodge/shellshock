@@ -152,3 +152,30 @@ if [ $bool_var = true ] || [ ! $another_var = true ]; then
   echo -e 'here'
 fi
         """)
+
+    def test_if_call(self):
+        """ Tests if a called method has a good exit code """
+        # TODO: Should these subshells be wrapped in quotes??
+        self.assert_parsed(
+            """
+import shellshock as ss
+if ss.subshell('whoami'):
+    print("I am somebody")
+        """, """
+if "$(whoami)"; then
+  echo -e 'I am somebody'
+fi
+        """)
+
+    def test_if_not_call(self):
+        """ Tests if a called method has a bad exit code """
+        self.assert_parsed(
+            """
+import shellshock as ss
+if not ss.subshell('whoami'):
+    print("I am nobody")
+        """, """
+if ! "$(whoami)"; then
+  echo -e 'I am nobody'
+fi
+        """)

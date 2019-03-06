@@ -1,6 +1,6 @@
 import ast
 from os import getcwd
-from os.path import join
+from os.path import join, isfile
 from shellshock.parse import Parseable, parse
 from shellshock.parse.body import parse_body
 from unittest.mock import Mock
@@ -19,7 +19,7 @@ def get_testing_mocks():
     out.append("}")
     for mock_call, mock in Parseable._known_mocks.items():
         out.append("__mock_{}() {{".format(mock_call))
-        out.append(mock.side_effect)
+        out.append("  " + mock.side_effect)
         out.append("}}".format(mock_call))
     # Add two extra newlines for readability
     out.append("")
@@ -37,7 +37,10 @@ def parse_mocks(cwd=None):
         return
     if cwd is None:
         cwd = getcwd()
-    with open(join(cwd, _MOCKS_FILENAME), 'r') as mock_calls:
+    mocks_file = join(cwd, _MOCKS_FILENAME)
+    if not isfile(mocks_file):
+        return
+    with open(mocks_file) as mock_calls:
         for mock_call in mock_calls.readlines():
             mock_call = mock_call.strip()  # remove trailing newline
             args = mock_call.split(" ")  # TODO: Handle quotes

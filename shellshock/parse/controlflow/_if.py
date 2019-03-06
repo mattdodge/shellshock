@@ -1,4 +1,4 @@
-from ast import Name, Not, UnaryOp, BoolOp
+from ast import Name, Not, UnaryOp, BoolOp, Call
 from shellshock.parse import Parseable, parse
 from shellshock.parse.body import parse_body
 
@@ -36,7 +36,13 @@ class IfType(Parseable):
                 isinstance(obj_test.operand, Name):
             # They are testing NOT a boolean variable, still assume true
             return "[ {test} = true ]".format(test=parse(obj_test))
-
+        elif isinstance(obj_test, Call):
+            return "{test}".format(test=parse(obj_test))
+        elif isinstance(obj_test, UnaryOp) and \
+                isinstance(obj_test.op, Not) and \
+                isinstance(obj_test.operand, Call):
+            # They are testing NOT a call, prefix the ! and parse the call
+            return "{test}".format(test=parse(obj_test))
         else:
             # It's a more complicated test, parse it
             return "[ {test} ]".format(test=parse(obj_test))

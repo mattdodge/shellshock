@@ -14,14 +14,7 @@ class CallType(Parseable):
             if kwarg.arg == '__id__':
                 mock_id = parse(kwarg.value, raw=True)
                 if mock_id in cls._known_mocks:
-                    # Record the mock call before processing the side effect
-                    return [
-                        '__record_mock_call {} {}'.format(
-                            mock_id,
-                            " ".join([parse(arg) for arg in obj.args]),
-                        ),
-                        '__mock_{}'.format(mock_id)
-                    ]
+                    return cls._call_mock(mock_id, obj.args)
 
         if func_name in cls._known_funcs:
             return "{} {}".format(
@@ -36,3 +29,16 @@ class CallType(Parseable):
                 context=ConvertContext,
                 **kwargs,
             )
+
+    @classmethod
+    def _call_mock(cls, mock_id, mock_args):
+        """ Call a unit test mock instead of the real method.
+
+        This will spawn a subshell that does two things:
+          1. Records the mock call with arguments for assertion in the test
+          2. Calls a stub function that returns the mock side effect
+        """
+        return '$(__record_mock_call {mock} {args}; __mock_{mock})'.format(
+            mock=mock_id,
+            args=" ".join([parse(arg) for arg in mock_args]),
+        )

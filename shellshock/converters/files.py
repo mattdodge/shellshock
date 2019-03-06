@@ -3,7 +3,7 @@ from shellshock.parse import parse
 
 
 def _file_check(test, call_args):
-    return "{} {}".format(test, parse(call_args[0]))
+    return "[ {} {} ]".format(test, parse(call_args[0]))
 
 
 @converter('ss.file_exists')
