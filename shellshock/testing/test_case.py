@@ -1,7 +1,7 @@
 from os.path import join
-from shellshock.convert import convert_source
+from shellshock.convert import convert_source, load_converters
 from shellshock.parse import Parseable
-from shellshock.testing.mocks import TestingMock
+from shellshock.testing.mocks import TestingMock, parse_mocks
 from shutil import rmtree
 import subprocess
 import tempfile
@@ -16,6 +16,8 @@ class ShellshockTestCase(TestCase):
 
     def setUp(self):
         super().setUp()
+        Parseable._known_refs.add("ss")
+        load_converters()
         self.mocks = {}
 
     def tearDown(self):
@@ -35,6 +37,8 @@ class ShellshockTestCase(TestCase):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         )
+        # Go through the called mocks and actually "call" them
+        parse_mocks(cwd=exec_dir)
         if self._cleanup_file:
             rmtree(tmp)
         return result

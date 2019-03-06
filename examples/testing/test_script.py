@@ -22,6 +22,8 @@ class TestScript(ShellshockTestCase):
     def test_mocking_method(self):
         mock_call = self.add_mock_function('funccall', side_effect="ss.noop()")
         out = self.run_script(join(dirname(__file__), 'script.py'))
-        # mock_call.assert_called_once_with(3)
-        print(out.stdout)
-        print(out.stderr)
+        # Mock arguments are always strings
+        mock_call.assert_called_once_with('3')
+        # Since we mocked our method we shouldn't actually see any output
+        self.assertEqual(out.stdout, b'')
+        self.assertEqual(out.stderr, b'')
