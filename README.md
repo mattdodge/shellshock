@@ -18,6 +18,27 @@ To convert a Python shellshock script to a regular shell script:
 shellshock my_script.py -o my_script.sh
 ```
 
+That command would, for example, turn this Python script:
+**my_script.py**
+```python
+myvar = 5
+if myvar > 3:
+    print("Big number")
+else:
+    print("Small number")
+```
+into this shell script:
+**my_script.sh**
+```bash
+#!/bin/sh
+myvar=5
+if [ "$myvar" -gt 3 ]; then
+  echo -e 'Big number'
+else
+  echo -e 'Small number'
+fi
+```
+
 ## Starting with an existing shell script
 Let's say you have an existing shell script you want to convert that looks like this:
 
@@ -48,3 +69,7 @@ import shellshock as ss
 if ss.isfile("file"):
     print("ok")
 ```
+
+## Full Documentation
+
+To see more examples, CLI and library references, and extended documentation see the full docs at https://shellshock.readthedocs.io
